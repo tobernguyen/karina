@@ -35,19 +35,9 @@ $BIN ca generate --name sealed-secrets --cert-path .certs/sealed-secrets-crt.pem
 printf "\n\n\n\n$(tput bold)Provision Cluster$(tput setaf 7)\n"
 $BIN provision vsphere-cluster $PLATFORM_OPTIONS_FLAGS
 
-result=$?
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-echo "Provision exit: $result"
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-
 printf "\n\n\n\n$(tput bold)Basic Deployments$(tput setaf 7)\n"
 
 $BIN deploy phases --crds --calico --base --stubs --dex $PLATFORM_OPTIONS_FLAGS
-
-result=$?
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-echo "deploy exit: $result"
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 failed=false
 
@@ -58,14 +48,9 @@ if ! $BIN test phases --base --stubs --wait 120 --progress=false $PLATFORM_OPTIO
   failed=true
 fi
 
-if [[ "$failed" = false ]]; then
+if [[ "$failed" = "false" ]]; then
   printf "\n\n\n\n$(tput bold)All Deployments$(tput setaf 7)\n"
   $BIN deploy all $PLATFORM_OPTIONS_FLAGS
-
-  result=$?
-  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
-  echo "deploy exit: $result"
-  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
   ## e2e do not use --wait at the run level, if needed each individual test implements
   ## its own wait. e2e tests should always pass once the non e2e have passed
@@ -88,6 +73,6 @@ $BIN terminate-orphans $PLATFORM_OPTIONS_FLAGS || echo "Orphans not terminated."
 $BIN cleanup $PLATFORM_OPTIONS_FLAGS
 kill "$BASHPID"
 
-if [[ "$failed" = true ]]; then
+if [[ "$failed" = "true" ]]; then
   exit 1
 fi
