@@ -28,6 +28,9 @@ var specs = []string{
 	"postgres-rules.yaml.raw",
 }
 
+var unmanagedSpecs = []string{
+}
+
 var cleanup = []string{
 	"observability/thanos-compactor.yaml",
 	"observability/thanos-querier.yaml",
@@ -90,6 +93,14 @@ func Install(p *platform.Platform) error {
 	for _, spec := range specs {
 		if err := p.ApplySpecs("", "monitoring/"+spec); err != nil {
 			return fmt.Errorf("install: failed to apply monitoring specs: %v", err)
+		}
+	}
+
+	if p.Kubernetes.Managed == false {
+		for _, spec := range unmanagedSpecs {
+			if err := p.ApplySpecs("", "monitoring/"+spec); err != nil {
+				return fmt.Errorf("install: failed to apply monitoring specs: %v", err)
+			}
 		}
 	}
 
