@@ -23,7 +23,7 @@ echo "$SSH_SECRET_KEY_BASE64" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 
 sshuttle --dns -e "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" -r $SSH_USER@$SSH_JUMP_HOST $VPN_NETWORK &
-SSHUTTLE_PID=$BASHPID
+SSHUTTLE_PID=$?
 # Wait for connection
 sleep 2s
 
@@ -48,7 +48,7 @@ if ! $BIN test phases --base --stubs --wait 120 --progress=false $PLATFORM_OPTIO
   failed=true
 fi
 
-if [[ "$failed" = "false" ]]; then
+if [[ "$failed" = false ]]; then
   printf "\n\n\n\n$(tput bold)All Deployments$(tput setaf 7)\n"
   $BIN deploy all $PLATFORM_OPTIONS_FLAGS
 
@@ -73,6 +73,8 @@ $BIN terminate-orphans $PLATFORM_OPTIONS_FLAGS || echo "Orphans not terminated."
 $BIN cleanup $PLATFORM_OPTIONS_FLAGS
 kill "$BASHPID"
 
-if [[ "$failed" = "true" ]]; then
+if [[ "$failed" = true ]]; then
+  echo "Test failed."
   exit 1
 fi
+echo "Test passed!"
