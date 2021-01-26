@@ -40,20 +40,25 @@ printf "\n\n\n\n$(tput bold)Basic Deployments$(tput setaf 7)\n"
 
 $BIN deploy phases --crds --calico --base --stubs --dex $PLATFORM_OPTIONS_FLAGS
 
-printf "\n\n\n\n$(tput bold)Up?$(tput setaf 7)\n"
-# wait for the base deployment with stubs to come up healthy
-$BIN test phases --base --stubs --wait 120 --progress=false $PLATFORM_OPTIONS_FLAGS
-
-printf "\n\n\n\n$(tput bold)All Deployments$(tput setaf 7)\n"
-$BIN deploy all $PLATFORM_OPTIONS_FLAGS
-
-
 failed=false
 
-## e2e do not use --wait at the run level, if needed each individual test implements
-## its own wait. e2e tests should always pass once the non e2e have passed
-if ! $BIN test  all --e2e --progress=false --junit-path test-results/results.xml $PLATFORM_OPTIONS_FLAGS; then
+printf "\n\n\n\n$(tput bold)Up?$(tput setaf 7)\n"
+# wait for the base deployment with stubs to come up healthy
+if ! $BIN test phases --base --stubs --wait 120 --progress=false $PLATFORM_OPTIONS_FLAGS; then
+  echo "Failed setting up the basic deployment"
   failed=true
+fi
+
+if [[ "$failed" = false ]]; then
+  printf "\n\n\n\n$(tput bold)All Deployments$(tput setaf 7)\n"
+  $BIN deploy all $PLATFORM_OPTIONS_FLAGS
+
+  ## e2e do not use --wait at the run level, if needed each individual test implements
+  ## its own wait. e2e tests should always pass once the non e2e have passed
+  if ! $BIN test  all --e2e --progress=false --junit-path test-results/results.xml $PLATFORM_OPTIONS_FLAGS; then
+    echo "Failure in feature test"
+    failed=true
+  fi
 fi
 
 printf "\n\n\n\n$(tput bold)Reporting$(tput setaf 7)\n"
