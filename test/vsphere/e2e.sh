@@ -17,7 +17,7 @@ export PLATFORM_OPTIONS_FLAGS="-e name=${PLATFORM_CLUSTER_ID} -e domain=${PLATFO
 export PLATFORM_CONFIG=${PLATFORM_CONFIG:-test/vsphere/vsphere.yaml}
 unset KUBECONFIG
 
-mkdir ~/.ssh
+mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 echo "$SSH_SECRET_KEY_BASE64" | base64 -d > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
@@ -71,7 +71,7 @@ zip -r artifacts/snapshot.zip snapshot/*
 
 $BIN terminate-orphans $PLATFORM_OPTIONS_FLAGS || echo "Orphans not terminated."
 $BIN cleanup $PLATFORM_OPTIONS_FLAGS
-kill "$BASHPID"
+kill "$SSHUTTLE_PID"
 
 if [[ "$failed" = true ]]; then
   echo "Test failed."
