@@ -61,7 +61,7 @@ if [[ "$failed" = false ]]; then
 fi
 
 printf "\n\n\n\n$(tput bold)Reporting$(tput setaf 7)\n"
-wget -nv https://github.com/flanksource/build-tools/releases/download/v0.9.9/build-tools
+wget -nv https://github.com/flanksource/build-tools/releases/download/v0.11.2/build-tools
 chmod +x build-tools
 ./build-tools gh actions report-junit test-results/results.xml --token $GIT_API_KEY --build "$BUILD"
 
