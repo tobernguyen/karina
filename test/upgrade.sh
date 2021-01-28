@@ -108,7 +108,7 @@ fi
 wget -nv https://github.com/flanksource/build-tools/releases/download/v0.11.2/build-tools
 chmod +x build-tools
 ./build-tools gh actions report-junit test-results/results.xml --token $GIT_API_KEY --build "$BUILD"
-./build-tools junit upload-tesults
+./build-tools junit upload-tesults test-results/results.xml
 
 mkdir -p artifacts
 $BIN snapshot --output-dir snapshot -v --include-specs=true --include-logs=true --include-events=true -e name=upgrade-test
