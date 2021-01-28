@@ -29,6 +29,8 @@ var specs = []string{
 }
 
 var unmanagedSpecs = []string{
+	"alertmanager-rules.yaml.raw",
+	"service-monitors.yaml",
 }
 
 var cleanup = []string{
@@ -96,15 +98,31 @@ func Install(p *platform.Platform) error {
 		}
 	}
 
-	if p.Kubernetes.Managed == false {
+	if !p.Kubernetes.Managed {
 		for _, spec := range unmanagedSpecs {
-			if err := p.ApplySpecs("", "monitoring/"+spec); err != nil {
+			if err := p.ApplySpecs("", "monitoring/unmanaged/"+spec); err != nil {
 				return fmt.Errorf("install: failed to apply monitoring specs: %v", err)
 			}
 		}
 	}
 
-	dashboards, err := p.GetResourcesByDir("/monitoring/dashboards", "manifests")
+	err := deployDashboards(p, "/monitoring/dashboards")
+	if err != nil {
+		return err
+	}
+
+	if !p.Kubernetes.Managed {
+		err = deployDashboards(p, "/monitoring/dashboards/unmanaged")
+		if err != nil {
+			return err
+		}
+	}
+
+	return deployThanos(p)
+}
+
+func deployDashboards(p *platform.Platform, rootPath string) error {
+	dashboards, err := p.GetResourcesByDir(rootPath, "manifests")
 	if err != nil {
 		return fmt.Errorf("unable to find dashboards: %v", err)
 	}
@@ -131,8 +149,7 @@ func Install(p *platform.Platform) error {
 			return fmt.Errorf("install: failed to apply CRD: %v", err)
 		}
 	}
-
-	return deployThanos(p)
+	return nil
 }
 
 func deployThanos(p *platform.Platform) error {
