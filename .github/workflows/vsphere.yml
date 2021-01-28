@@ -23,7 +23,7 @@ jobs:
     if: "! contains(toJSON(github.event.commits.*.message), 'skip-e2e')"
     needs: binary
     strategy:
-      fail-fast: false
+      #fail-fast: false
       matrix:
         k8s:
           - v1.16.9
