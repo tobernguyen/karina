@@ -71,7 +71,7 @@ zip -r artifacts/snapshot.zip snapshot/*
 
 $BIN terminate-orphans $PLATFORM_OPTIONS_FLAGS || echo "Orphans not terminated."
 $BIN cleanup $PLATFORM_OPTIONS_FLAGS
-kill "$SSHUTTLE_PID"
+#kill "$SSHUTTLE_PID"
 
 if [[ "$failed" = true ]]; then
   echo "Test failed."
