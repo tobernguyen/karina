@@ -127,7 +127,7 @@ func deployDashboards(p *platform.Platform, rootPath string) error {
 		return fmt.Errorf("unable to find dashboards: %v", err)
 	}
 	for name := range dashboards {
-		contents, err := p.Template("/monitoring/dashboards/"+name, "manifests")
+		contents, err := p.Template(rootPath+"/"+name, "manifests")
 		if err != nil {
 			return fmt.Errorf("failed to template the dashboard: %v ", err)
 		}
