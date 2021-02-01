@@ -34,25 +34,17 @@ jobs:
           - v1.18.6
         suite:
           - minimal
-        tesults-key:
-          - replace
         include:
           - k8s: v1.17.5
             suite: minimal
-            TESULTS_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFhNDM4ZWYyLTNmMmYtNGNhZS1iYjc2LWI0ZWM4NTMzZDUyZi0xNjExNzM2MzYwMjc5IiwiZXhwIjo0MTAyNDQ0ODAwMDAwLCJ2ZXIiOiIwIiwic2VzIjoiODAzNzI1NTUtNjg1NS00Mjc0LWI1Y2ItMmI5MzY4MGE0OWE2IiwidHlwZSI6InQifQ.wxqfSIHqL8ujffGwMI7HSJXlpiwcZf2uqp8QtWmg7w8
           - k8s: v1.17.5
             suite: minimal-antrea
-            TESULTS_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFhNDM4ZWYyLTNmMmYtNGNhZS1iYjc2LWI0ZWM4NTMzZDUyZi0xNjExNzUzNTYxMDA4IiwiZXhwIjo0MTAyNDQ0ODAwMDAwLCJ2ZXIiOiIwIiwic2VzIjoiMjU0NzkzMzMtM2NmNy00ZDdhLThjNTgtNTFlMGQ4Mzc5MzI1IiwidHlwZSI6InQifQ.NdxHrZzOaKHRHkzwbKhwNdjUci1TQaaKzwys_xWZSkc
           - k8s: v1.17.5
             suite: monitoring
-            #TODO: replace with correct key when it is generated
-            TESULTS_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFhNDM4ZWYyLTNmMmYtNGNhZS1iYjc2LWI0ZWM4NTMzZDUyZi0xNjExNzUzMzY2MjY4IiwiZXhwIjo0MTAyNDQ0ODAwMDAwLCJ2ZXIiOiIwIiwic2VzIjoiODE2N2MwZmUtYjY4MS00ZWNlLTg4NDgtNDUwNTdhNGY2ZWUxIiwidHlwZSI6InQifQ.ncoWRiX5G6EKj3jh9DPfZ9XC8xNE7HYHinutbSJpdGY
           - k8s: v1.16.9
             suite: minimal
-            TESULTS_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFhNDM4ZWYyLTNmMmYtNGNhZS1iYjc2LWI0ZWM4NTMzZDUyZi0xNjExNzM0MDQzMzc0IiwiZXhwIjo0MTAyNDQ0ODAwMDAwLCJ2ZXIiOiIwIiwic2VzIjoiNWU5MjBmZjEtMzYxZS00NmVkLTkyNjEtNDk3OTFhNTgxNzdhIiwidHlwZSI6InQifQ.zWRfHeOpiPWTMs_KuhWNKs-Z1CFifgPiQpuk_6nvyNc
           - k8s: v1.16.9
             suite: monitoring
-            TESULTS_TOKEN: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImFhNDM4ZWYyLTNmMmYtNGNhZS1iYjc2LWI0ZWM4NTMzZDUyZi0xNjExNzUzMzg2ODU5IiwiZXhwIjo0MTAyNDQ0ODAwMDAwLCJ2ZXIiOiIwIiwic2VzIjoiMTNjOTk4NDctYjEzMy00ZTk0LTg4NjUtZjQwNTkxYzBlMTFmIiwidHlwZSI6InQifQ.eTr_4v8sT9IhCYqWlGQoH8dy7wE8vZidGffL-mbl-GI
     steps:
       - uses: actions/checkout@main
       - uses: actions/download-artifact@v2

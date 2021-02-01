@@ -1,5 +1,4 @@
-#!/bin/bash
-BIN=./.bin/karina
+#!/bin/bash BIN=./.bin/karina
 chmod +x $BIN
 mkdir -p .bin
 export GO_VERSION=${GO_VERSION:-1.13}
@@ -52,7 +51,9 @@ fi
 wget -nv https://github.com/flanksource/build-tools/releases/download/v0.11.2/build-tools
 chmod +x build-tools
 ./build-tools gh actions report-junit test-results/results.xml --token $GIT_API_KEY --build "$BUILD"
-./build-tools junit upload-tesults test-results/results.xml
+TESULTS_TOKEN=$(cat test/tesults.yaml | jq '."$KUBERNETES_VERSION-$SUITE"')
+echo $TESULTS_TOKEN
+./build-tools junit upload-tesults test-results/results.xml --token $TESULTS_TOKEN
 
 mkdir -p artifacts
 $BIN snapshot --output-dir snapshot -v --include-specs=true --include-logs=true --include-events=true
