@@ -41,10 +41,14 @@ jobs:
             suite: minimal-antrea
           - k8s: v1.17.5
             suite: monitoring
+          - k8s: v1.17.5
+            suite: managed
           - k8s: v1.16.9
             suite: minimal
           - k8s: v1.16.9
             suite: monitoring
+          - k8s: v1.16.9
+            suite: managed
     steps:
       - uses: actions/checkout@main
       - uses: actions/download-artifact@v2
