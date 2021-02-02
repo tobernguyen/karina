@@ -3,12 +3,10 @@ kind: Deployment
 metadata:
   labels:
     app: dex
-  annotations:
-    reload/all: "true" #restart on cm/secret change
   name: dex
   namespace: dex
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: dex
@@ -16,10 +14,12 @@ spec:
     metadata:
       labels:
         app: dex
+    annotations:
+      reload/all: "true" #restart on cm/secret change
     spec:
       serviceAccountName: dex
       containers:
-        - image: quay.io/dexidp/dex:{{.dex.version}}
+        - image: ghcr.io/dexidp/dex:{{.dex.version}}
           name: dex
           command: ["/usr/local/bin/dex", "serve", "/etc/dex/cfg/config.yaml"]
           resources:
