@@ -53,7 +53,8 @@ wget -nv https://github.com/flanksource/build-tools/releases/download/v0.11.3/bu
 chmod +x build-tools
 ./build-tools gh actions report-junit test-results/results.xml --token $GIT_API_KEY --build "$BUILD"
 TESULTS_TOKEN=$(cat test/tesults.yaml | jq .\"$KUBERNETES_VERSION-$SUITE\")
-echo $TESULTS_TOKEN
+VAR=$TESULTS_TOKEN
+echo $VAR
 ./build-tools junit upload-tesults test-results/results.xml --token $TESULTS_TOKEN
 
 mkdir -p artifacts
