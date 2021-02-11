@@ -8,11 +8,11 @@ jobs:
       image: flanksource/build-tools:0.6
     steps:
       - uses: actions/checkout@v2
-      - run: make release
+#      - run: make release
       - uses: actions/setup-node@v2
         with:
           node-version: 12
-      - run: npx semantic-release@17
+      - run: npx semantic-release@17 --debug
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   docker:
