@@ -16,7 +16,7 @@
 
 
 ---
-#
+##
 **karina** is a toolkit for building and operating Kubernetes based, multi-cluster platforms. It includes the following high level functions
 
 To see how it compares to other tools in the ecosystem see [comparison](./docs/comparison.md)
